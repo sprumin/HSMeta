@@ -6,7 +6,7 @@
 
 #### 1. 하스스톤 관련 데이터 수집
  - 정규전 덱 티어 및 순위
- - 덱 점유율
+ - 덱 분포도
  - 덱 승률
  - 주요 덱 상성
 
@@ -18,9 +18,6 @@
     "date": "YYYY-MM-DD hh:mm:ss[.nnn]",
     "tiers": {
         "num_tier": [{"rank": "name"}],
-    },
-    "share": {
-        "hero": [{"name": "share"}],
     },
     "distribution": {
         "name": "distribution",
@@ -41,6 +38,6 @@
 #### 3. 개발
  - sprumin123@gmail.com
  - 시간 날 때..
- - Tiers -> share -> distribution -> odds -> counter 순서로 개발
+ - Tiers -> distribution -> odds -> counter 순서로 개발
  - 2018/08/30 Tiers End
  - 2018/08/30 Share End
