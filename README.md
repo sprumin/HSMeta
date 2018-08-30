@@ -43,3 +43,4 @@
  - 시간 날 때..
  - Tiers -> share -> distribution -> odds -> counter 순서로 개발
  - 2018/08/30 Tiers End
+ - 2018/08/30 Share End
