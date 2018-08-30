@@ -39,6 +39,7 @@
  ~~~
 
 #### 3. 개발
+ - sprumin123@gmail.com
  - 시간 날 때..
- - Tier -> share -> distribution -> odds -> counter 순서로 개발
- - 2018/08/30 Tier End
+ - Tiers -> share -> distribution -> odds -> counter 순서로 개발
+ - 2018/08/30 Tiers End
