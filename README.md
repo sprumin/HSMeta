@@ -16,7 +16,7 @@
  ~~~
  {
     "date": "YYYY-MM-DD hh:mm:ss[.nnn]",
-    "tier": {
+    "tiers": {
         "num_tier": [{"rank": "name"}],
     },
     "share": {
@@ -38,5 +38,7 @@
  }
  ~~~
 
-#### 3. 개발 계획
+#### 3. 개발
  - 시간 날 때..
+ - Tier -> share -> distribution -> odds -> counter 순서로 개발
+ - 2018/08/30 Tier End
