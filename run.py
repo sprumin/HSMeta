@@ -48,28 +48,28 @@ def get_rank():
     return tiers
 
 
-def get_share():
+def get_distribution():
     """ 주요 덱 분포도 """
-    share_dict = dict()
+    distibution_dict = dict()
     html = _selenium("https://www.hearthstudy.com/live")
     # print(html.find("div", attrs={"id": "fchart"}))
     name = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "name"})
-    share = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
+    distribution = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
 
-    if len(name) != len(share):
-        share_dict.update({"Error": "Invalid Data"})
+    if len(name) != len(distribution):
+        distibution_dict.update({"Error": "Invalid Data"})
     else:
         for i in range(len(name)):
-            share_dict.update({name[i].text: share[i].text})
+            distibution_dict.update({name[i].text: distribution[i].text})
 
-    return share_dict
+    return distibution_dict
 
 
 def run():
     """ 각 데이터들을 json형태로 저장 """
     bot_data = {
         "tiers": get_rank(),
-        "share": get_share(),
+        "share": get_distribution(),
     }
 
     print(bot_data)
