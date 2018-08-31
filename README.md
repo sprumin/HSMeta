@@ -37,6 +37,7 @@
 
 #### 3. 개발
  - sprumin123@gmail.com
+ - Parser, Crawler, 크롤러
  - 시간 날 때..
  - Tiers -> distribution -> odds -> counter 순서로 개발
  - 2018/08/30 Tiers End
