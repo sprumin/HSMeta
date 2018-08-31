@@ -41,4 +41,6 @@
  - 시간 날 때..
  - Tiers -> Distribution -> Odds -> Counter 순서로 개발
  - 2018/08/30 Tiers End
- - 2018/08/30 Distribution End
+ - 2018/08/30 Distribution End 
+ - 2018/08/31 Odds End
+ - 개발 완료후 Django를 사용하여 Data를 확인할 수 있는 웹 페이지 제작
