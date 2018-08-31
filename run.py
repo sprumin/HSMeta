@@ -15,13 +15,15 @@ def _bs4(url):
     return soup
 
 
-def _selenium(url):
+def _selenium(url, _class=None):
     """ Selenium과 BeautifulSoup를 이용한 크롤링 """
     driver = webdriver.Chrome("C:/Users/sprumin/chromedriver.exe")
     driver.get(url)
 
-    target = driver.find_element_by_class_name("c3-event-rect-59")
-    target.click()
+    if _class:
+        print("class", _class)
+        target = driver.find_element_by_class_name(_class)
+        target.click()
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -50,9 +52,13 @@ def get_rank():
 
 def get_distribution():
     """ 주요 덱 분포도 """
+    find_attr_html = _selenium("https://www.hearthstudy.com/live")
     distibution_dict = dict()
-    html = _selenium("https://www.hearthstudy.com/live")
-    # print(html.find("div", attrs={"id": "fchart"}))
+
+    target_class = find_attr_html.find("div", attrs={"id": "fchart"}).find_all("rect", attrs={"class": "c3-event-rect"})
+    target_class_num = target_class[len(target_class) - 1]['class'][2]
+
+    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num))
     name = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "name"})
     distribution = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
 
@@ -63,6 +69,12 @@ def get_distribution():
             distibution_dict.update({name[i].text: distribution[i].text})
 
     return distibution_dict
+
+
+def get_odds():
+    """ 주요 덱 승률 """
+    html = _selenium("https://www.hearthstudy.com/live")
+    return html
 
 
 def run():
