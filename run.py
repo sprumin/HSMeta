@@ -15,15 +15,18 @@ def _bs4(url):
     return soup
 
 
-def _selenium(url, _class=None):
+def _selenium(url, _class=None, subject=None):
     """ Selenium과 BeautifulSoup를 이용한 크롤링 """
     driver = webdriver.Chrome("C:/Users/sprumin/chromedriver.exe")
     driver.get(url)
 
     if _class:
-        print("class", _class)
-        target = driver.find_element_by_class_name(_class)
-        target.click()
+        target = driver.find_elements_by_class_name(_class)
+
+        if subject == "distribution":
+            target[0].click()
+        elif subject == "odds":
+            target[1].click()
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -58,7 +61,7 @@ def get_distribution():
     target_class = find_attr_html.find("div", attrs={"id": "fchart"}).find_all("rect", attrs={"class": "c3-event-rect"})
     target_class_num = target_class[len(target_class) - 1]['class'][2]
 
-    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num))
+    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num), "distribution")
     name = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "name"})
     distribution = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
 
@@ -73,17 +76,32 @@ def get_distribution():
 
 def get_odds():
     """ 주요 덱 승률 """
-    html = _selenium("https://www.hearthstudy.com/live")
-    return html
+    find_attr_html = _selenium("https://www.hearthstudy.com/live")
+    odds_dict = dict()
+
+    target_class = find_attr_html.find("div", attrs={"id": "rchart"}).find_all("rect", attrs={"class": "c3-event-rect"})
+    target_class_num = target_class[len(target_class) - 1]['class'][2]
+
+    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num), "odds")
+    name = html.find("div", attrs={"id": "rchart"}).find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "name"})
+    odds = html.find("div", attrs={"id": "rchart"}).find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
+
+    if len(name) != len(odds):
+        odds_dict.update({"Error": "Invalid Data"})
+    else:
+        for i in range(len(name)):
+            odds_dict.update({name[i].text: odds[i].text})
+
+    return odds_dict
 
 
 def run():
     """ 각 데이터들을 json형태로 저장 """
     bot_data = {
-        "tiers": get_rank(),
-        "share": get_distribution(),
+        # "tiers": get_rank(),
+        "distribution": get_distribution(),
+        # "odds": get_odds(),
     }
-
     print(bot_data)
 
 if __name__ == "__main__":
