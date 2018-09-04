@@ -1,4 +1,4 @@
-# Python Crawling-Bot
+# Hearthstone Meta Crawling Bot
 
 
 ### 개발 전
@@ -9,6 +9,7 @@
  - 덱 분포도
  - 덱 승률
  - 주요 덱 상성
+ - 직업 별 상성
 
 #### 2. 데이터 처리
  - Hearthstone 디렉토리 아래 json 파일로 저장
@@ -25,11 +26,20 @@
     "odds": {
         "name": "odds",
     },
-    "counter": {
-        "name": {
-            "versus": "name",
-            "odds": "odds",
-            "entirely": "entirely",
+    "matchup": {
+        "main": {
+            "name": {
+                "versus": "name",
+                "odds": "odds",
+                "entirely": "entirely",
+            }
+        },
+        "class": {
+            "name": {
+                "versus": "name",
+                "odds": "odds",
+                "entirely": "entirely",
+            }
         }
     }
  }
@@ -39,7 +49,7 @@
  - sprumin123@gmail.com
  - Parser, Crawler, 크롤러
  - 시간 날 때..
- - Tiers -> Distribution -> Odds -> Counter 순서로 개발
+ - Tiers -> Distribution -> Odds -> Matchup 순서로 개발
  - 2018/08/30 Tiers End
  - 2018/08/30 Distribution End 
  - 2018/08/31 Odds End
