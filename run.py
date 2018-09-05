@@ -105,7 +105,7 @@ def run():
     crawl_data = {
         "date": _datetime,
         "tiers": get_rank(),
-        "Frequency": get_frequency(),
+        "frequency": get_frequency(),
         "win_rates": get_win_rates(),
     }
 
