@@ -13,7 +13,7 @@
 
 #### 2. 데이터 처리
  - Hearthstone 디렉토리 아래 json 파일로 저장
- - 날짜별 정리 or 파일하나에 덮어쓰기 ( 현재 전자 선택 )
+ - 날짜별 정리
  ~~~
  {
     "date": "YYYY-MM-DD hh:mm:ss[.nnn]",
@@ -54,3 +54,4 @@
  - 2018/08/30 Distribution End 
  - 2018/08/31 Odds End
  - 개발 완료후 Django를 사용하여 Data를 확인할 수 있는 웹 페이지 제작
+ - 2018/09/05 Matchup에서 막혔다. requests로 받아오는데 500뜸 계속.. 삽질
