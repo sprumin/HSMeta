@@ -81,10 +81,10 @@ def get_win_rates():
     rates_dict = dict()
 
     decks = [
-        value.text for value in html.find_all("div", attrs={"class": "transform-right"})
+        value.text for value in html.find_all("span", attrs={"class": "kometa"})
     ]
     rates = [
-        value.text for value in html.find_all("span", attrs={"class": "kometa"})
+        value.text for value in html.find_all("div", attrs={"class": "transform-right"})
     ]
 
     if len(decks) != len(rates):
@@ -98,7 +98,7 @@ def get_win_rates():
 
 def run():
     """ 각 데이터들을 json형태로 저장 """
-    _datetime = datetime.datetime.now().isoformat()
+    _datetime = datetime.datetime.now().strftime("%Y-%m-%d")
     bot_data = {
         "date": _datetime,
         "tiers": get_rank(),
@@ -106,7 +106,10 @@ def run():
         "win_rates": get_win_rates(),
     }
 
-    print(bot_data)
+    """ json 파일을 생성후 쓰기권한을 부여하고(w) 내용을 저장한다 """
+    with open('Hearthstone/{}.json'.format(_datetime), 'w', encoding="utf-8") as make_file:
+        json.dump(bot_data, make_file, ensure_ascii=False, indent="\t")
+
 
 if __name__ == "__main__":
     run()
