@@ -27,6 +27,7 @@
     "win_rates": {
         "name": "win_rates",
     },
+    <!--
     "matchup": {
         "main": {
             "name": {
@@ -43,6 +44,7 @@
             }
         }
     }
+    -->
  }
  ~~~
 
