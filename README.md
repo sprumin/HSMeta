@@ -25,12 +25,7 @@
         "name": "frequency",
     },
     "win_rates": {
-        "deck": {
-            "name": "win_rates",
-        },
-        "class": {
-            "name": "win_rates",
-        }
+        "name": "win_rates",
     },
     "matchup": {
         "main": {
