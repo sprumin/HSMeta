@@ -23,7 +23,7 @@ def _selenium(url, _class=None, subject=None):
     if _class:
         target = driver.find_elements_by_class_name(_class)
 
-        if subject == "distribution":
+        if subject == "Frequency":
             target[0].click()
         elif subject == "odds":
             target[1].click()
@@ -55,7 +55,7 @@ def get_rank():
     return tiers
 
 
-def get_distribution():
+def get_frequency():
     """ 주요 덱 분포도 """
     find_attr_html = _selenium("https://www.hearthstudy.com/live")
     distibution_dict = dict()
@@ -63,56 +63,49 @@ def get_distribution():
     target_class = find_attr_html.find("div", attrs={"id": "fchart"}).find_all("rect", attrs={"class": "c3-event-rect"})
     target_class_num = target_class[len(target_class) - 1]['class'][2]
 
-    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num), "distribution")
+    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num), "Frequency")
     name = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "name"})
-    distribution = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
+    frequency = html.find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
 
-    if len(name) != len(distribution):
+    if len(name) != len(frequency):
         distibution_dict.update({"Error": "Invalid Data"})
     else:
         for i in range(len(name)):
-            distibution_dict.update({name[i].text: distribution[i].text})
+            distibution_dict.update({name[i].text: frequency[i].text})
 
     return distibution_dict
 
 
-def get_odds():
-    """ 주요 덱 승률 """
-    find_attr_html = _selenium("https://www.hearthstudy.com/live")
-    odds_dict = dict()
+def get_win_rates():
+    html = _bs4("https://hearthstudy.com/stats")
+    rates_dict = dict()
 
-    target_class = find_attr_html.find("div", attrs={"id": "rchart"}).find_all("rect", attrs={"class": "c3-event-rect"})
-    target_class_num = target_class[len(target_class) - 1]['class'][2]
+    decks = [
+        value.text for value in html.find_all("div", attrs={"class": "transform-right"})
+    ]
+    rates = [
+        value.text for value in html.find_all("span", attrs={"class": "kometa"})
+    ]
 
-    html = _selenium("https://www.hearthstudy.com/live", str(target_class_num), "odds")
-    name = html.find("div", attrs={"id": "rchart"}).find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "name"})
-    odds = html.find("div", attrs={"id": "rchart"}).find("div", attrs={"class": "c3-tooltip-container"}).find_all("td", attrs={"class": "value"})
-
-    if len(name) != len(odds):
-        odds_dict.update({"Error": "Invalid Data"})
+    if len(decks) != len(rates):
+        rates_dict.update({"Error": "Invalid Data"})
     else:
-        for i in range(len(name)):
-            odds_dict.update({name[i].text: odds[i].text})
+        for i in range(len(decks)):
+            rates_dict.update({decks[i]: rates[i]})
 
-    return odds_dict
-
-
-def get_counter():
-    """ 주요 덱 별 상성 """
-    html = _selenium("https://hearthstudy.com/matchup")
-    print(html)
+    return rates_dict
 
 
 def run():
     """ 각 데이터들을 json형태로 저장 """
-    _datetime = datetime.datetime.now()
+    _datetime = datetime.datetime.now().isoformat()
     bot_data = {
-        # "date": _datetime,
-        # "tiers": get_rank(),
-        # "distribution": get_distribution(),
-        # "odds": get_odds(),
-        "counters": get_counter(),
+        "date": _datetime,
+        "tiers": get_rank(),
+        "Frequency": get_frequency(),
+        "win_rates": get_win_rates(),
     }
+
     print(bot_data)
 
 if __name__ == "__main__":
