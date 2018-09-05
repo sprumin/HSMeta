@@ -98,17 +98,27 @@ def get_win_rates():
 
 def run():
     """ 각 데이터들을 json형태로 저장 """
-    _datetime = datetime.datetime.now().strftime("%Y-%m-%d")
-    bot_data = {
+    _datetimenow = datetime.datetime.now()
+    _datetime = _datetimenow.strftime("%Y-%m-%d")
+    _day = _datetimenow.strftime("%d")
+
+    crawl_data = {
         "date": _datetime,
         "tiers": get_rank(),
         "Frequency": get_frequency(),
         "win_rates": get_win_rates(),
     }
 
-    """ json 파일을 생성후 쓰기권한을 부여하고(w) 내용을 저장한다 """
-    with open('Hearthstone/{}.json'.format(_datetime), 'w', encoding="utf-8") as make_file:
-        json.dump(bot_data, make_file, ensure_ascii=False, indent="\t")
+    while True:
+        _tmonth = datetime.datetime.now().strftime("%d")
+        if not _tmonth == _day:
+            """ json 파일을 생성후 쓰기권한을 부여하고(w) 내용을 저장한다 """
+            try:
+                with open('Hearthstone/{}.json'.format(_datetime), 'w', encoding="utf-8") as make_file:
+                    json.dump(crawl_data, make_file, ensure_ascii=False, indent="\t")
+            except Exception as e:
+                with open('Hearthstone/{}.txt'.format(_datetime), 'w') as make_file:
+                    make_file.write(e)
 
 
 if __name__ == "__main__":
