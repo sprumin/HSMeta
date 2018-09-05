@@ -1,9 +1,9 @@
 from bs4 import BeautifulSoup
 from selenium import webdriver
 
-import requests
+import datetime
 import json
-import time
+import requests
 
 
 def _bs4(url):
@@ -27,6 +27,8 @@ def _selenium(url, _class=None, subject=None):
             target[0].click()
         elif subject == "odds":
             target[1].click()
+        else:
+            return "Subject is None"
 
     html = driver.page_source
     soup = BeautifulSoup(html, "html.parser")
@@ -95,12 +97,21 @@ def get_odds():
     return odds_dict
 
 
+def get_counter():
+    """ 주요 덱 별 상성 """
+    html = _selenium("https://hearthstudy.com/matchup")
+    print(html)
+
+
 def run():
     """ 각 데이터들을 json형태로 저장 """
+    _datetime = datetime.datetime.now()
     bot_data = {
+        # "date": _datetime,
         # "tiers": get_rank(),
-        "distribution": get_distribution(),
+        # "distribution": get_distribution(),
         # "odds": get_odds(),
+        "counters": get_counter(),
     }
     print(bot_data)
 
