@@ -17,7 +17,12 @@ def _bs4(url):
 
 def _selenium(url, _class=None, subject=None):
     """ Selenium과 BeautifulSoup를 이용한 크롤링 """
-    driver = webdriver.Chrome("C:/Users/sprumin/chromedriver.exe")
+    options = webdriver.ChromeOptions()
+    options.add_argument('headless')
+    options.add_argument('window-size=1920x1080')
+    options.add_argument('disable-gpu')
+
+    driver = webdriver.Chrome("C:/Users/sprumin/chromedriver.exe", chrome_options=options)
     driver.get(url)
 
     if _class:
@@ -109,17 +114,19 @@ def run():
         "win_rates": get_win_rates(),
     }
 
+    with open('Hearthstone/{}.json'.format(_datetime), 'w', encoding="utf-8") as make_file:
+                    json.dump(crawl_data, make_file, ensure_ascii=False, indent="\t")
+"""
     while True:
         _tmonth = datetime.datetime.now().strftime("%d")
         if not _tmonth == _day:
-            """ json 파일을 생성후 쓰기권한을 부여하고(w) 내용을 저장한다 """
             try:
                 with open('Hearthstone/{}.json'.format(_datetime), 'w', encoding="utf-8") as make_file:
                     json.dump(crawl_data, make_file, ensure_ascii=False, indent="\t")
             except Exception as e:
                 with open('Hearthstone/{}.txt'.format(_datetime), 'w') as make_file:
                     make_file.write(e)
-
+"""
 
 if __name__ == "__main__":
     run()

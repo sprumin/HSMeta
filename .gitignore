@@ -3,3 +3,6 @@ venv
 
 # selenium debug
 debug.log
+
+# parse data
+Hearthstone/*.json
